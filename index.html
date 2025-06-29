@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>System Availability Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <header>
+      <h1><i class="fas fa-server"></i> System Availability Dashboard</h1>
+      <p class="subtitle">Real Time Performance analysis</p>
+    </header>
+
+    <div class="metrics">
+      <!-- Average Availability -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <i class="fas fa-chart-line"></i>
+          <span>Average Availability</span>
+        </div>
+        <div class="metric-value" id="avg-availability">--%</div>
+        <div class="metric-description">Overall system performance</div>
+        <div class="performance-indicator">
+          <span class="indicator above-target"></span>
+          <span>Loading...</span>
+        </div>
+        <div class="info-badge" title="Average of all monthly availability percentages">i</div>
+      </div>
+
+      <!-- Target Compliance -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <i class="fas fa-bullseye"></i>
+          <span>Target Compliance</span>
+        </div>
+        <div class="metric-value" id="compliance-rate">--%</div>
+        <div class="metric-description">Months meeting AERC targets</div>
+        <div class="performance-indicator">
+          <span class="indicator above-target"></span>
+          <span>Loading...</span>
+        </div>
+        <div class="info-badge" title="Percentage of months where availability met or exceeded the target">i</div>
+      </div>
+
+      <!-- Peak Performance -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <i class="fas fa-trophy"></i>
+          <span>Peak Performance</span>
+        </div>
+        <div class="metric-value" id="peak-performance">--%</div>
+        <div class="metric-description">Highest monthly availability</div>
+        <div class="performance-indicator">
+          <span class="indicator above-target"></span>
+          <span>Loading...</span>
+        </div>
+        <div class="info-badge" title="The highest availability percentage recorded">i</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-header">
+        <h2 class="chart-title"><i class="fas fa-chart-bar"></i> Monthly Availability vs Targets</h2>
+
+        <div class="search-container">
+          <div class="search-header">
+            <div class="search-title">
+              <i class="fas fa-search"></i>
+              <span>Filter Data</span>
+            </div>
+            <div class="search-mode-toggle" id="searchModeToggle">
+              <button class="mode-btn active" data-mode="month">Single Month</button>
+              <button class="mode-btn" data-mode="range">Date Range</button>
+            </div>
+          </div>
+
+          <div class="search-form">
+            <div class="search-row">
+              <div class="input-group" id="monthSearchGroup">
+                <label for="monthPicker">Select Month</label>
+                <div class="date-picker">
+                  <input type="month" id="monthPicker" class="date-input" />
+                </div>
+              </div>
+
+              <div class="input-group" id="rangeSearchGroup" style="display: none;">
+                <label for="startDate">Start Month</label>
+                <div class="date-picker">
+                  <input type="month" id="startDate" class="date-input"  />
+                </div>
+              </div>
+
+              <div class="input-group" id="endDateGroup" style="display: none;">
+                <label for="endDate">End Month</label>
+                <div class="date-picker">
+                  <input type="month" id="endDate" class="date-input" />
+                </div>
+              </div>
+            </div>
+
+            <div class="date-range-controls">
+              <button id="applyFilter" class="date-range-btn">
+                <i class="fas fa-filter"></i> Apply Filter
+              </button>
+              <button id="resetFilter" class="date-range-btn reset">
+                <i class="fas fa-sync"></i> Reset Filter
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="searchResults" class="search-results">
+          <!-- Filter results show here -->
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <div class="chart-canvas-container">
+          <canvas id="availabilityChart"></canvas>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color system-color"></div>
+          <span>System Availability</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color target-color"></div>
+          <span>Target Availability</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color highlight-color"></div>
+          <span>Selected Month</span>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Data Source: AERC Monitoring System</p>
+      <p>Systems exceeding <span class="highlight">99.5%</span> availability for 3+ consecutive months qualify for performance bonuses</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
